@@ -201,6 +201,7 @@ def test_validate_template_rejects_unknown_and_attribute_access():
     assert validate_template("{unknown}") != []
     assert validate_template("{labels.__class__}") != []
     assert validate_template("{alertname") != []
+    assert validate_template("{alertname:bad}") != []
 
 
 def test_render_alert_fills_known_fields():

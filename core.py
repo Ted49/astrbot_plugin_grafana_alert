@@ -373,6 +373,12 @@ def validate_template(template: str) -> list[str]:
             errors.append(f"field {field_name!r} may not use attribute or index access")
         elif field_name not in PLACEHOLDER_KEYS:
             errors.append(f"unknown placeholder {field_name!r}")
+    if errors:
+        return errors
+    try:
+        template.format(**dict.fromkeys(PLACEHOLDER_KEYS, ""))
+    except (KeyError, IndexError, ValueError, AttributeError) as exc:
+        errors.append(f"cannot render template: {exc}")
     return errors
 
 
