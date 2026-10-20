@@ -1,0 +1,83 @@
+{
+  "enabled": {
+    "description": "总开关",
+    "type": "bool",
+    "default": true
+  },
+  "default_session": {
+    "description": "默认目标会话",
+    "type": "string",
+    "default": "",
+    "hint": "未命中任何路由规则时使用。可在群里执行 /grafana bind 自动填写。"
+  },
+  "routes": {
+    "description": "标签路由规则",
+    "type": "template_list",
+    "default": [],
+    "hint": "按顺序匹配，第一条命中的规则生效；match 留空表示匹配全部。",
+    "templates": {
+      "route": {
+        "name": "标签路由",
+        "hint": "match 形如 team=db,env=prod；session 填目标会话 UMO。",
+        "display_item": "name",
+        "items": {
+          "name": {
+            "description": "规则名称",
+            "type": "string",
+            "default": "",
+            "hint": "用于 /grafana bind <规则名> 与状态展示。"
+          },
+          "match": {
+            "description": "标签匹配",
+            "type": "string",
+            "default": "",
+            "hint": "k=v 形式，逗号分隔；留空表示匹配全部。"
+          },
+          "session": {
+            "description": "目标会话 UMO",
+            "type": "string",
+            "default": "",
+            "hint": "例如 aiocqhttp:GroupMessage:123456。"
+          }
+        }
+      }
+    }
+  },
+  "severity_filter": {
+    "description": "severity 白名单",
+    "type": "list",
+    "default": [],
+    "hint": "留空表示转发全部；配置后只转发匹配的 severity。"
+  },
+  "forward_resolved": {
+    "description": "转发恢复通知",
+    "type": "bool",
+    "default": true
+  },
+  "firing_template": {
+    "description": "触发告警模板",
+    "type": "text",
+    "default": "🚨 告警触发 | {alertname}\n级别：{severity}\n实例：{instance}\n摘要：{summary}\n开始：{starts_at}\n详情：{generator_url}"
+  },
+  "resolved_template": {
+    "description": "恢复告警模板",
+    "type": "text",
+    "default": "✅ 告警恢复 | {alertname}\n级别：{severity}\n实例：{instance}\n恢复：{ends_at}\n详情：{generator_url}"
+  },
+  "timezone": {
+    "description": "时间显示时区",
+    "type": "string",
+    "default": "Asia/Shanghai",
+    "hint": "IANA 时区名称，例如 Asia/Shanghai、UTC。"
+  },
+  "max_message_chars": {
+    "description": "单条消息最大字符数",
+    "type": "int",
+    "default": 3000,
+    "slider": {
+      "min": 500,
+      "max": 8000,
+      "step": 100
+    }
+  }
+}
